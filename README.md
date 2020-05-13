@@ -3,5 +3,5 @@ Simple Project which emulates a sales System.
 
 Modules used:
 - CSV
-- OS
+- Pandas
 - Pickle
