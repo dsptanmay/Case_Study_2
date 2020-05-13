@@ -211,8 +211,6 @@ def purchaseItem():
                         index = data.index(row)
                         ncode = row[0]
                         codes.update({ncode: index})
-                    print(f"Current data:{data}")
-                    print(f"Codes:{codes}")
             except:
                 break
     if len(data) == 0:
@@ -222,6 +220,8 @@ def purchaseItem():
 
     cont = 'y'
     while cont in 'yY':
+        print(f"Current data:{data}\n")
+        print(f"Codes:{codes}")
         print("\n")
         while True:
             purchaseCode = str(
@@ -235,7 +235,7 @@ def purchaseItem():
             else:
                 break
         discount = rec[3]
-        acDisc = (discount/100)
+        acDisc = (discount/100)  # Converting discount from float to percent
         actualPrice = (rec[2] - (rec[2]*acDisc))  # Price - Price*Discount
         while True:
             qty = int(input('Enter the quantity(INT): '))
@@ -262,6 +262,7 @@ def main():
     cont = 'y'
     while cont in 'yY':
         print('\n')
+        print("-"*76)
         print("""
                 1.Add a new Item
                 2.Modify an existing item
@@ -271,7 +272,7 @@ def main():
                 6.EXIT
             """)
         opt = int(input("Choose from one of the options above: "))
-        if opt not in [1, 2, 3, 4, 5]:
+        if opt not in [1, 2, 3, 4, 5, 6]:
             print('Enter a valid input!')
         elif opt == 1:
             newItem()
@@ -285,8 +286,6 @@ def main():
             purchaseItem()
         elif opt == 6:
             exit()
-        print("-"*76)
-        cont = str(input('Do you wish to continue?(y/n)(Main Menu): '))
         print("-"*76)
 
 
