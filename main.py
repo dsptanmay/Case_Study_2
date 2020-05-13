@@ -2,9 +2,6 @@ import pickle
 from tabulate import tabulate
 from datetime import date
 today = date.today()
-# list1 = [['201d', 'Shoes', 9999, 13, 4], ['201e', 'Nite', 8999, 10, 6]]
-# with open('Items.dat', 'wb') as f:
-#     pickle.dump(list1, f)
 
 f = open('Items.dat', 'wb')
 f.close()
@@ -254,6 +251,9 @@ def purchaseItem():
         print(today)
         print('\n')
         print(tabulate(contentList, headers=header, tablefmt='fancy_grid'))
+        print("-Thank you for shopping with us!")
+        print("-No returns,no refunds")
+        print("-If cashier doesn't provide the bill, then this purchase is on the house")
         cont = str(input('\nDo you wish to continue?(y/n): ')
                    ).lower().rstrip(" ").lstrip(" ")
 
