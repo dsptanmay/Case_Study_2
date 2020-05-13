@@ -1,6 +1,6 @@
 # MADE BY: Tanmay Deshpande
-#GRADE: XII
-#SECTION: E
+# GRADE: XII
+# SECTION: E
 # DATE OF COMPLETION: 13-05-2020
 # SALES EMULATION PROJECT
 import pickle
@@ -8,8 +8,12 @@ from tabulate import tabulate
 from datetime import date
 today = date.today()
 
-f = open('Items.dat', 'wb')
-f.close()
+
+def createFiles():
+    f = open('Items.dat', 'wb')
+    f.close()
+    f = open('Sales.dat', 'wb')
+    f.close()
 
 
 def newItem():
@@ -252,14 +256,16 @@ def purchaseItem():
         totalPrice = actualPrice*qty
         newList = [purchaseCode, rec[1], rec[2],
                    rec[3], actualPrice, qty, totalPrice]
+        with open('Sales.dat', 'ab') as fileObject:
+            pickle.dump(newList, fileObject)
         contentList = []
         contentList.append(newList)
         print(today)
         print('\n')
         print(tabulate(contentList, headers=header, tablefmt='fancy_grid'))
-        print("-Thank you for shopping with us!")
-        print("-No returns,no refunds")
-        print("-If cashier doesn't provide the bill, then this purchase is on the house")
+        print("- Thank you for shopping with us! ")
+        print("- No returns,no refunds ")
+        print("- If cashier doesn't provide the bill, then this purchase is on the house ")
         cont = str(input('\nDo you wish to continue?(y/n): ')
                    ).lower().rstrip(" ").lstrip(" ")
 
@@ -296,4 +302,5 @@ def main():
 
 
 if __name__ == "__main__":
+    createFiles()
     main()
