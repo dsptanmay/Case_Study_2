@@ -1,56 +1,75 @@
-# Simple TUI app for Case Study #2
+import pickle
 import csv
-import pandas as pd
-with open('Items.csv', 'w') as f1:
-    writer = csv.writer(f1)
-    writer.writerow(['ITEM_CODE', 'ITEM_NAME', 'PRICE', 'QUANTITY', 'REORDER_QUANTITY'])
+from datetime import date
+from tabulate import tabulate
+
+
+def createFiles():
+    f = open('Items.dat', 'wb')
+    f.close()
+    f = open('Sales.dat', 'wb')
+    f.close()
 
 
 def newItem():
-    flag = 0
-    while flag == 0:
-        flag2 = 0
+    codes = []
+    data = []
+    with open('Items.dat', 'rb') as fileobj:
         while True:
-            itemCode = str(input('Enter the item code(Alphanumeric):'))
-            state = itemCode.isalnum()
-            if len(itemCode) != 4:
-                print("Try again!")
-                print("Item code should be 4 characters and be Alphanumeric!")
+            try:
+                data = pickle.load(fileobj)
+                for i in data:
+                    codes.append(i[0])
+
+    cont = 'y'
+    while cont in 'yY':
+        while True:
+            code = str(input('Enter the item code: '))
+            if code in codes:
+                print('That code already exists!')
+            elif len(code) != 4 or not(code.isalnum()):
+                print('Try Again!')
+            else:
                 break
-            elif itemCode.isdigit() is True or itemCode.isalpha() is True:
-                print("Try Again!")
-                print("Item code should be an Alphanumeric!")
+        desc = str(input(prompt='Enter item desc(max 20 chars): '))
+        desc = desc[:20]
+        price = float(input('Enter the price of the item: '))
+        qty = float(input('Enter the current quantity of the item: '))
+        reQty = float(input(prompt='Enter the reorder Quantity: '))
+        ins = [code, desc, price, qty, reQty]
+        data.append(ins)
+        cont = str(input('Do you wish to continue?(y/n): ')
+                   ).lower().rstrip(" ").lstrip(" ")
+    with open('Items.dat', 'ab') as f:
+        pickle.dump(data, f)
+
+
+def removeItem():
+    codes = []
+    data = []
+    with open('Items.dat', 'rb') as f:
+        while True:
+            try:
+                data = pickle.load(f)
+                for row in data:
+                    codes.append(row[0])
+
+            except:
                 break
-            nameInput = str(input("Enter the product name: ")).capitalize()
-            if len(nameInput) >= 20 or len(nameInput) == 0:
-                print("Try again!")
-                print("0<Name length<20")
-                break
-            priceInput = float(input("Enter the price of the product: "))
-            quantityInput = int(
-                input("Enter the Quantity in stock of the product: "))
-            reorderInput = int(input("Enter the reorder level: "))
-            if priceInput <= 0 or quantityInput < 0:
-                print("Try Again!")
+    more = 'y'
+    while more in 'yY':
+        while True:
+            code = str(
+                input('Enter the item code which you wanted to delete: '))
+            if code in codes:
+                index = 1
                 break
             else:
-                insertList = [itemCode, nameInput,
-                              priceInput, quantityInput, reorderInput]
-                with open('Items.csv', 'a') as fileObject:
-                    writer = csv.writer(fileObject)
-                    writer.writerow(insertList)
-                print("Entry Successfully made!")
-                flag2 = 0
-                break
-        cont = str(input("Do you wish to continue?(y/n): ")
-                   ).lstrip(" ").rstrip(" ").lower()
-        if cont == "n":
-            flag = 1
-            break
-        else:
-            flag = 0
+                print('This code does not exist,Please try again!')
+        more = str(input('Do you wish to continue?(y/n): '))
 
 
-newItem()
-df = pd.read_csv('Items.csv')
-print(df)
+createFiles()
+f1 = open('Items.dat', 'rb')
+data = pickle.load(f1)
+print(data)
