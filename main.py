@@ -1,3 +1,8 @@
+# MADE BY: Tanmay Deshpande
+#GRADE: XII
+#SECTION: E
+# DATE OF COMPLETION: 13-05-2020
+# SALES EMULATION PROJECT
 import pickle
 from tabulate import tabulate
 from datetime import date
@@ -213,6 +218,7 @@ def purchaseItem():
                         codes.update({ncode: index})
             except:
                 break
+
     if len(data) == 0:
         print('Data Set is currently empty')
         print('Enter some data first!')
