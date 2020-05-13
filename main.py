@@ -142,14 +142,14 @@ def modifyItem():
 
 
 def removeItem():
-    codes = {}
+    heading = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
     data = []
-    with open('Items.dat', 'rb') as f3:
+    codes = {}
+    with open('Items.dat', 'rb') as fileObject:
         while True:
             try:
-                data = pickle.load(f3)
+                data = pickle.load(fileObject)
                 if len(data) == 0:
-                    print('Enter some data first!')
                     pass
                 else:
                     for row in data:
@@ -157,27 +157,33 @@ def removeItem():
                         ncode = row[0]
                         c = {ncode: index}
                         codes.update(c)
-                    break
             except:
                 break
+    if len(data) == 0:
+        print('Data Set is currently empty!')
+        print('add some data first')
+        return
     cont = 'y'
-    newData = []
     while cont in 'yY':
-        x = str(input("Enter the code that you want to delete: "))
-        if x in codes.keys():
-            index = codes[x]
-            del codes[x]
-            data.pop(index)
-            newData = data
-            with open('Items.dat', 'wb') as fileObject:
-                pickle.dump(newData, fileObject)
-            break
-        elif x not in codes.keys():
-            print('The code entered is not valid. Please Try Again!')
+        print('Current records:\n')
+        print(data)
+        while True:
+            remCode = str(
+                input('Enter the code for which you want to delete the record: '))
+            if remCode not in codes.keys():
+                print('Invalid Code!')
+            else:
+                break
+        remIndex = codes[remCode]
+        data.pop(remIndex)
+        newData = data
+        with open('Items.dat', 'wb') as fileObject:
+            pickle.dump(newData, fileObject)
+        print('Modified records:')
+        print(tabulate(newData, heading, 'fancy_grid'))
         cont = str(
             input('Do you wish to continue?(y/n): '
-                  )).lower().lstrip(" ").rstrip(" ")
-        print("-"*50)
+                  )).lower().rstrip(" ").lstrip(" ")
 
 
 def showAll():
