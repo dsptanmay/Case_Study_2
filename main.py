@@ -6,8 +6,9 @@
 import pickle
 from tabulate import tabulate
 from datetime import date
+import subprocess as sp
 today = date.today()
-
+sp.run('pip install tabulate',shell=True)
 
 def createFiles():
     f = open('Items.dat', 'wb')
