@@ -7,8 +7,11 @@ import pickle
 from tabulate import tabulate
 from datetime import date
 import subprocess as sp
+import sys
+print(sys.executable)
+print(sys.version)
+sp.run('pip install --upgrade tabulate', shell=True)
 today = date.today()
-sp.run('pip install tabulate', shell=True)
 
 
 def createFiles():
