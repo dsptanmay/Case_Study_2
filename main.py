@@ -187,8 +187,8 @@ def removeItem():
             except:
                 break
     if len(data) == 0:
-        print('Data Set is currently empty!')
-        print('add some data first')
+        print('Data Set is currently empty')
+        print('Add some data first!')
         return
     cont = 'y'
     while cont in 'yY':
@@ -222,6 +222,11 @@ def showAll():
                 data = pickle.load(fileObject)
             except:
                 break
+    if len(data) == 0:
+        print('Data Set is currently empty')
+        print('Add some data first!')
+        return
+
     print(tabulate(data, heading, 'fancy_grid'), '\n')
 
 
@@ -246,7 +251,7 @@ def purchaseItem():
 
     if len(data) == 0:
         print('Data Set is currently empty')
-        print('Enter some data first!')
+        print('Add some data first!')
         return
 
     cont = 'y'
