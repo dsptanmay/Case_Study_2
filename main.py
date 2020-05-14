@@ -13,6 +13,9 @@ print(sys.version)
 sp.run('pip install --upgrade tabulate', shell=True)
 today = date.today()
 
+header_standard = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
+header_purchase = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'ACTUAL PRICE', 'QTY', 'TOTAL_PRICE']
+
 
 def createFiles():
     f = open('Items.dat', 'wb')
@@ -24,7 +27,7 @@ def createFiles():
 def newItem():
     cont = 'y'
     while cont in 'yY':
-        # newCodes = []  # For multiple entries at once, we have to store the code
+        print('-'*45)
         codes = {}  # Dict to hold item code and index of same
         data = []
         with open('Items.dat', 'rb') as fileObject:
@@ -88,8 +91,8 @@ def newItem():
 
 def modifyItem():
     cont = 'y'
-    header = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QUANTITY', 'REORDER_QTY']
     while cont in 'yY':
+        print("-"*45)
         data = []
         codes = {}
         with open('Items.dat', 'rb') as fileObject:
@@ -112,7 +115,7 @@ def modifyItem():
             return
         else:
             print('Current data set:\n')
-            print(tabulate(data, header, tablefmt='fancy_grid'), '\n')
+            print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
 
         while True:
             modCode = str(
@@ -169,7 +172,7 @@ def modifyItem():
 
 
 def removeItem():
-    heading = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
+
     data = []
     codes = {}
     with open('Items.dat', 'rb') as fileObject:
@@ -192,8 +195,9 @@ def removeItem():
         return
     cont = 'y'
     while cont in 'yY':
+        print('-'*45)
         print('Current records:\n')
-        print(tabulate(data, heading, tablefmt='fancy_grid'), '\n')
+        print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
         while True:
             remCode = str(
                 input('Enter the code for which you want to delete the record: '))
@@ -207,7 +211,7 @@ def removeItem():
         with open('Items.dat', 'wb') as fileObject:
             pickle.dump(newData, fileObject)
         print('Modified records:')
-        print(tabulate(newData, heading, 'fancy_grid'), '\n')
+        print(tabulate(newData, header_standard, 'fancy_grid'), '\n')
         cont = str(
             input('Do you wish to continue?(y/n): '
                   )).lower().rstrip(" ").lstrip(" ")
@@ -215,7 +219,6 @@ def removeItem():
 
 def showAll():
     data = []
-    heading = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
     with open('Items.dat', 'rb') as fileObject:
         while True:
             try:
@@ -226,13 +229,11 @@ def showAll():
         print('Data Set is currently empty')
         print('Add some data first!')
         return
-
-    print(tabulate(data, heading, 'fancy_grid'), '\n')
+    print('-*45')
+    print(tabulate(data, header_standard, 'fancy_grid'), '\n')
 
 
 def purchaseItem():
-    header = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT',
-              'ACTUAL_PRICE', 'QUANTITY', 'TOTAL_PRICE']
     data = []
     codes = {}
     with open("Items.dat", "rb") as fileObject:
@@ -256,19 +257,16 @@ def purchaseItem():
 
     cont = 'y'
     while cont in 'yY':
-        print(f"Current data:{data}\n")
-        print(f"Codes:{codes}")
-        print("\n")
+        print(f"Current data:\n")
+        print(tabulate(data, header_standard, tablefmt='fancy_grid'))
         while True:
             purchaseCode = str(
                 input("Enter the item code that you want to purchase: "))
             if purchaseCode not in codes.keys():
                 print('Invalid code!')
-            elif purchaseCode in codes.keys():
+            else:
                 index = codes[purchaseCode]
                 rec = data[index]
-                break
-            else:
                 break
         discount = rec[3]
         acDisc = (discount/100)  # Converting discount from float to percent
@@ -288,7 +286,7 @@ def purchaseItem():
         contentList.append(newList)
         print(today)
         print('\n')
-        print(tabulate(contentList, headers=header, tablefmt='fancy_grid'), '\n')
+        print(tabulate(contentList, headers=header_purchase, tablefmt='fancy_grid'), '\n')
         print("- Thank you for shopping with us! ")
         print("- No returns,no refunds ")
         print("- If cashier doesn't provide the bill, then this purchase is on the house ")
@@ -299,7 +297,7 @@ def purchaseItem():
 def main():
     cont = 'y'
     while cont in 'yY':
-        print('\n')
+        print('-'*50)
         print("""
                 1.Add a new Item
                 2.Modify an existing item
@@ -323,7 +321,6 @@ def main():
             purchaseItem()
         elif opt == 6:
             exit()
-        print("-"*76)
 
 
 if __name__ == "__main__":

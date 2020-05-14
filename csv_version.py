@@ -2,7 +2,9 @@
 import csv
 from tabulate import tabulate
 from datetime import date
+import subprocess as sp
 import sys
+sp.run('pip install --upgrade', shell=True)
 print(sys.version)
 print(sys.executable)
 today = date.today()
@@ -257,22 +259,21 @@ def purchaseItem():
         for line in reader:
             if len(line) != 0:
                 data.append(line)
-        if len(data) != 0:
-            for row in data:
-                index = data.index(row)
-                ncode = row[0]
-                c = {ncode: index}
-                codes.update(c)
+            if len(data) != 0:
+                for row in data:
+                    index = data.index(row)
+                    ncode = row[0]
+                    c = {ncode: index}
+                    codes.update(c)
 
     if len(data) == 0:
         print('Data Set is currently empty')
         print('Add some data first!')
         return
-    else:
-        print('Current data:\n')
-        print(tabulate(data, header_standard, 'fancy_grid'))
     cont = 'y'
     while cont in 'yY':
+        print('Current data:\n')
+        print(tabulate(data, header_purchase, 'fancy_grid'))
         while True:
             codeInput = str(input('Enter the code of the item that you want to purchase: '))
             if codeInput not in codes.keys():
@@ -281,25 +282,28 @@ def purchaseItem():
                 pIndex = codes[codeInput]
                 pRec = data[pIndex]
                 break
-        discount = (prec[3]/100)  # Actual DISCOUNT (disc/100)
-        price = prec[3]*discount  # Price of product * discount
+        description = str(pRec[1])
+        price = float(pRec[2])
+        discount = float(pRec[3])/100
+        actualPrice = price - price*discount
+
         while True:
             qty = int(input('Enter the quantity: '))
             if qty < 0:
                 print("Quantity cannot be negative\nTry Again!")
             else:
                 break
-        totalPrice = price*qty
-        newList = [codeInput, prec[1], prec[2], prec[3], price, qty, totalPrice]
+        totalPrice = actualPrice*qty
+        newList = [codeInput, description, price, discount, actualPrice, qty, totalPrice]
         printedList = []
         printedList.append(newList)
-        print('Bill:\n')
+        print('\nBill:\n')
         print(tabulate(printedList, header_purchase, 'fancy_grid'), '\n')
         print("""
-                -Thank you for shopping with us!
-                -NO RETURNS, NO REFUNDS!
-                -IF Bill is not provided, then this purchase is on the house!
-        """)
+                 -Thank you for shopping with us!
+                 -NO RETURNS, NO REFUNDS!
+                 -IF Bill is not provided, then this purchase is on the house!
+                 """)
         cont = str(input('Do you wish to continue?(y/n): '))
 
 
