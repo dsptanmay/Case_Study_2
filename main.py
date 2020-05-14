@@ -8,7 +8,8 @@ from tabulate import tabulate
 from datetime import date
 import subprocess as sp
 today = date.today()
-sp.run('pip install tabulate',shell=True)
+sp.run('pip install tabulate', shell=True)
+
 
 def createFiles():
     f = open('Items.dat', 'wb')
@@ -18,82 +19,98 @@ def createFiles():
 
 
 def newItem():
-    newCodes = []  # For multiple entries at once, we have to store the code
-    codes = {}  # Dict to hold item code and index of same
-    data = []
-    with open('Items.dat', 'rb') as fileObject:
-        while True:
-            try:
-                data = pickle.load(fileObject)
-                if len(data) == 0:
-                    pass
-                else:
-                    for row in data:
-                        index = data.index(row)
-                        ncode = row[0]
-                        c = {ncode: index}
-                        codes.update(c)
-            except:
-                break
     cont = 'y'
     while cont in 'yY':
+        # newCodes = []  # For multiple entries at once, we have to store the code
+        codes = {}  # Dict to hold item code and index of same
+        data = []
+        with open('Items.dat', 'rb') as fileObject:
+            while True:
+                try:
+                    data = pickle.load(fileObject)
+                    if len(data) == 0:
+                        pass
+                    else:
+                        for row in data:
+                            index = data.index(row)
+                            ncode = row[0]
+                            c = {ncode: index}
+                            codes.update(c)
+                except:
+                    break
         while True:
             code = str(input('Enter the item code:'))  # 1
-            if code in newCodes or code in codes.keys():
+            if code in codes.keys():
                 print('Code already taken!')
                 print('Try Again!')
             elif code.isalnum() is False or len(code) != 4:
                 print('Try Again!')
             else:
-                newCodes.append(code)
+                break
+        descInput = str(
+            input("Enter a short description of the item: "))  # 2
+        desc = descInput[:20]
+        while True:
+            priceInput = float(input("Enter the price of the item: "))  # 3
+            if priceInput < 0:
+                print('Try again!')
+            else:
                 break
         while True:
-            descInput = str(
-                input("Enter a short description of the item: "))  # 2
-            desc = descInput[:20]
-            priceInput = float(input("Enter the price of the item: "))  # 3
             discInput = float(input("Enter the discount(in %): "))  # 4
-            qtyInput = int(input("Enter the current quantity: "))  # 5
-            reQtyInput = int(input('Enter the reorder quantity: '))  # 6
-            if priceInput <= 0 or discInput < 0 or qtyInput < 0 or reQtyInput < 0:
+            if discInput < 0:
                 print('Try Again!')
             else:
-                ins = [code, descInput, priceInput,
-                       discInput, qtyInput, reQtyInput]
-                data.append(ins)
-                with open('Items.dat', 'wb') as fileObject:
-                    pickle.dump(data, fileObject)
-                print('Entry successfully made!')
-                print('-'*50)
                 break
+        while True:
+            qtyInput = int(input("Enter the current quantity: "))  # 5
+            if qtyInput < 0:
+                print('Try Again!')
+            else:
+                break
+        while True:
+            reQtyInput = int(input('Enter the reorder quantity: '))  # 6
+            if reQtyInput < 0:
+                print('Try Again!')
+            else:
+                break
+        ins = [code, descInput, priceInput,
+               discInput, qtyInput, reQtyInput]
+        data.append(ins)
+        with open('Items.dat', 'wb') as fileObject:
+            pickle.dump(data, fileObject)
+        print('Entry successfully made!')
         cont = str(input("Do you wish to continue?(y/n): "))
 
 
 def modifyItem():
-    data = []
-    codes = {}
-    with open('Items.dat', 'rb') as fileObject:
-        while True:
-            try:
-                data = pickle.load(fileObject)
-                if len(data) == 0:
-                    pass
-                else:
-                    for row in data:
-                        index = data.index(row)
-                        ncode = row[0]
-                        c = {ncode: index}
-                        codes.update(c)
-            except:
-                break
-    if len(data) == 0:
-        print('Data Set is currently empty')
-        print('Add some data first!')
-        return
     cont = 'y'
+    header = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QUANTITY', 'REORDER_QTY']
     while cont in 'yY':
-        print('Current records:\n')
-        print(data, '\n')
+        data = []
+        codes = {}
+        with open('Items.dat', 'rb') as fileObject:
+            while True:
+                try:
+                    data = pickle.load(fileObject)
+                    if len(data) == 0:
+                        pass
+                    else:
+                        for row in data:
+                            index = data.index(row)
+                            ncode = row[0]
+                            c = {ncode: index}
+                            codes.update(c)
+                except:
+                    break
+        if len(data) == 0:
+            print('Data Set is currently empty')
+            print('Add some data first!')
+            return
+        else:
+            print('Current data set:\n')
+            print(tabulate(data, header, tablefmt='fancy_grid'), '\n')
+
         while True:
             modCode = str(
                 input("Enter the code for the item to be modified: "))
@@ -173,7 +190,7 @@ def removeItem():
     cont = 'y'
     while cont in 'yY':
         print('Current records:\n')
-        print(data)
+        print(tabulate(data, heading, tablefmt='fancy_grid'), '\n')
         while True:
             remCode = str(
                 input('Enter the code for which you want to delete the record: '))
@@ -187,7 +204,7 @@ def removeItem():
         with open('Items.dat', 'wb') as fileObject:
             pickle.dump(newData, fileObject)
         print('Modified records:')
-        print(tabulate(newData, heading, 'fancy_grid'))
+        print(tabulate(newData, heading, 'fancy_grid'), '\n')
         cont = str(
             input('Do you wish to continue?(y/n): '
                   )).lower().rstrip(" ").lstrip(" ")
@@ -202,7 +219,7 @@ def showAll():
                 data = pickle.load(fileObject)
             except:
                 break
-    print(tabulate(data, heading, 'fancy_grid'))
+    print(tabulate(data, heading, 'fancy_grid'), '\n')
 
 
 def purchaseItem():
@@ -263,7 +280,7 @@ def purchaseItem():
         contentList.append(newList)
         print(today)
         print('\n')
-        print(tabulate(contentList, headers=header, tablefmt='fancy_grid'))
+        print(tabulate(contentList, headers=header, tablefmt='fancy_grid'), '\n')
         print("- Thank you for shopping with us! ")
         print("- No returns,no refunds ")
         print("- If cashier doesn't provide the bill, then this purchase is on the house ")
@@ -275,7 +292,6 @@ def main():
     cont = 'y'
     while cont in 'yY':
         print('\n')
-        print("-"*76)
         print("""
                 1.Add a new Item
                 2.Modify an existing item
