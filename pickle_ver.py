@@ -311,6 +311,7 @@ def purchaseItem():
 
 
 def main():
+    createFiles()
     options = ['1.Add a new item',
                '2.Modify an existing item',
                '3.Remove an exisiting item',
@@ -336,7 +337,3 @@ def main():
         elif response == options[5]:
             exit()
 
-
-if __name__ == "__main__":
-    createFiles()
-    main()
