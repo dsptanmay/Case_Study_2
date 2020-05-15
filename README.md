@@ -1,4 +1,4 @@
-#Sales Project System
+# Sales Project System
 
 A Simple Project which emulates a sales System.
 
