@@ -4,12 +4,14 @@ from tabulate import tabulate
 from datetime import date
 import subprocess as sp
 import sys
-sp.run('pip install --upgrade', shell=True)
+sp.run('pip install --upgrade tabulate', shell=True)
 print(sys.version)
 print(sys.executable)
 today = date.today()
-header_standard = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
-header_purchase = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'ACTUAL PRICE', 'QTY', 'TOTAL_PRICE']
+header_standard = ['ITEM_CODE', 'DESC',
+                   'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
+header_purchase = ['ITEM_CODE', 'DESC', 'PRICE',
+                   'DISCOUNT', 'ACTUAL PRICE', 'QTY', 'TOTAL_PRICE']
 
 
 def createFiles():
@@ -84,7 +86,8 @@ def newItem():
                 print('Try Again!')
             else:
                 break
-        ins = [codeInput, descInput, priceInput, discInput, qtyInput, reQtyInput]
+        ins = [codeInput, descInput, priceInput,
+               discInput, qtyInput, reQtyInput]
         with open('Items.csv', 'a') as fileObject:
             writer = csv.writer(fileObject)
             writer.writerow(ins)
@@ -118,7 +121,8 @@ def modifyItem():
             print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
 
         while True:
-            codeInput = str(input('Enter the code for which you want to modify: '))
+            codeInput = str(
+                input('Enter the code for which you want to modify: '))
             if codeInput not in codes.keys():
                 print('Invalid code')
                 print('Try again!')
@@ -160,7 +164,8 @@ def modifyItem():
                     break
 
         while True:
-            newQty = str(input('Enter the NEW current Quantity(Enter for skip): '))
+            newQty = str(
+                input('Enter the NEW current Quantity(Enter for skip): '))
             if newQty == '':
                 break
             else:
@@ -172,7 +177,8 @@ def modifyItem():
                     break
 
         while True:
-            newReQty = str(input('Enter the NEW reorder quantity(Enter for skip): '))
+            newReQty = str(
+                input('Enter the NEW reorder quantity(Enter for skip): '))
             if newReQty == "":
                 break
             else:
@@ -189,7 +195,8 @@ def modifyItem():
             writer = csv.writer(fileObject)
             for row in data:
                 writer.writerow(row)
-        cont = str(input('Do you wish to continue?(y/n): ')).lower().rstrip(' ').lstrip(' ')
+        cont = str(input('Do you wish to continue?(y/n): ')
+                   ).lower().rstrip(' ').lstrip(' ')
 
 
 def removeItem():
@@ -218,7 +225,8 @@ def removeItem():
             print(tabulate(data, header_standard, 'fancy_grid'))
 
         while True:
-            codeInput = str(input('Enter the code for which you want to delete: '))
+            codeInput = str(
+                input('Enter the code for which you want to delete: '))
             if codeInput not in codes.keys():
                 print('Invalid Code\nTry Again!')
             else:
@@ -275,7 +283,8 @@ def purchaseItem():
         print('Current data:\n')
         print(tabulate(data, header_purchase, 'fancy_grid'))
         while True:
-            codeInput = str(input('Enter the code of the item that you want to purchase: '))
+            codeInput = str(
+                input('Enter the code of the item that you want to purchase: '))
             if codeInput not in codes.keys():
                 print('Invalid Code\nTry Again!')
             else:
@@ -294,7 +303,8 @@ def purchaseItem():
             else:
                 break
         totalPrice = actualPrice*qty
-        newList = [codeInput, description, price, discount, actualPrice, qty, totalPrice]
+        newList = [codeInput, description, price,
+                   discount, actualPrice, qty, totalPrice]
         printedList = []
         printedList.append(newList)
         print('\nBill:\n')
