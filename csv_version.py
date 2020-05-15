@@ -118,7 +118,7 @@ def modifyItem():
             return
         else:
             print('Current data:\n')
-            print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
+            print(tabulate(data, header_standard, 'fancy_grid'), '\n')
 
         while True:
             codeInput = str(
@@ -222,7 +222,7 @@ def removeItem():
             return
         else:
             print('Current data:\n')
-            print(tabulate(data, header_standard, 'fancy_grid'))
+            print(tabulate(data, header_standard, 'fancy_grid'), '\n')
 
         while True:
             codeInput = str(
@@ -235,7 +235,7 @@ def removeItem():
                 newData = data
                 break
         print('Entry succesfully deleted!\n')
-        print(tabulate(newData, header_standard, 'fancy_grid'))
+        print(tabulate(newData, header_standard, 'fancy_grid', '\n'))
         with open('Items.csv', 'w') as fileObject:
             writer = csv.writer(fileObject)
             for row in newData:
@@ -252,7 +252,7 @@ def showAllItems():
             if len(line) != 0:
                 data.append(line)
     if len(data) != 0:
-        print(tabulate(data, header_standard, 'fancy_grid'))
+        print(tabulate(data, header_standard, 'fancy_grid'), '\n')
     else:
         print('Data set is currently empty')
         print("Add some data first!")
@@ -281,7 +281,7 @@ def purchaseItem():
     cont = 'y'
     while cont in 'yY':
         print('Current data:\n')
-        print(tabulate(data, header_purchase, 'fancy_grid'))
+        print(tabulate(data, header_purchase, 'fancy_grid'), '\n')
         while True:
             codeInput = str(
                 input('Enter the code of the item that you want to purchase: '))
