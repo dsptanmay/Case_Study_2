@@ -4,11 +4,23 @@
 # DATE OF COMPLETION: 13-05-2020
 # SALES EMULATION PROJECT
 import pickle
-from tabulate import tabulate
+import sys
 from datetime import date
 import subprocess as sp
-import sys
-import questionary as qr
+import pkg_resources
+installed = {pkg.key for pkg in pkg_resources.working_set}
+required = {'questionary', 'tabulate'}
+missing = required - installed
+if missing:
+    python = sys.executable
+    sp.check_call([python, '-m', 'pip', 'install', '--upgrade',
+                   *missing], stdout=sp.DEVNULL)
+    from tabulate import tabulate
+    import questionary as qr
+else:
+    from tabulate import tabulate
+    import questionary as qr
+
 print(sys.executable)
 print(sys.version)
 today = date.today()

@@ -1,10 +1,20 @@
 # CSV VERSION OF SALES EMULATION PROJECT
 import csv
-import questionary as qr
 import sys
 from datetime import date
-from tabulate import tabulate
-import pickle
+import subprocess as sp
+import pkg_resources
+required = {'tabulate', 'questionary'}
+installed_pkgs = {pkg.key for pkg in pkg_resources.working_set}
+missing = required-installed_pkgs
+if missing:
+    python = sys.executable
+    sp.check_call([python, '-m', 'pip', 'install', '--upgrade',
+                   *missing], stdout=sp.DEVNULL)
+else:
+    from tabulate import tabulate
+    import questionary as qr
+
 print(sys.executable)
 print(sys.version)
 today = date.today()
