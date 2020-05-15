@@ -1,10 +1,10 @@
 # CSV VERSION OF SALES EMULATION PROJECT
-import csv
-from tabulate import tabulate
-from datetime import date
-import subprocess as sp
+import questionary as qr
 import sys
-sp.run('pip install --upgrade tabulate', shell=True)
+from datetime import date
+from tabulate import tabulate
+import csv
+import subprocess as sp
 print(sys.version)
 print(sys.executable)
 today = date.today()
@@ -317,30 +317,29 @@ def purchaseItem():
 
 
 def main():
+    options = ['1.Add a new item',
+               '2.Modify an existing item',
+               '3.Remove an exisiting item',
+               '4.Show all items',
+               '5.Purchase an item and generate a bill',
+               '6.EXIT']
     while True:
         print('-'*50)
-        print("""
-                1.Add a new Item
-                2.Modify an existing Item
-                3.Remove an Item
-                4.Show all Items
-                5.Purchase an Item and generate a bill
-                6.EXIT
-        """)
-        option = int(input('Choose from one of the above options: '))
-        if option not in [1, 2, 3, 4, 5, 6]:
-            print("Enter a valid option!")
-        elif option == 1:
+        question = qr.select(
+            'Select from one of the options: ',
+            choices=options)
+        response = question.ask()
+        if response == options[0]:
             newItem()
-        elif option == 2:
+        elif response == options[1]:
             modifyItem()
-        elif option == 3:
+        elif response == options[2]:
             removeItem()
-        elif option == 4:
+        elif response == options[3]:
             showAllItems()
-        elif option == 5:
+        elif response == options[4]:
             purchaseItem()
-        elif option == 6:
+        elif response == options[5]:
             exit()
         else:
             print('Try again!')
