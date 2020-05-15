@@ -11,6 +11,8 @@ if missing:
     python = sys.executable
     sp.check_call([python, '-m', 'pip', 'install', '--upgrade',
                    *missing], stdout=sp.DEVNULL)
+    from tabulate import tabulate
+    import questionary as qr
 else:
     from tabulate import tabulate
     import questionary as qr
