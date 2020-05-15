@@ -30,9 +30,7 @@ def newItem():
         with open('Items.csv', 'r') as fileObject:
             reader = csv.reader(fileObject)
             for line in reader:
-                if len(line) == 0:
-                    pass
-                else:
+                if len(line) != 0:
                     data.append(line)
             if len(data) != 0:
                 for row in data:
@@ -62,32 +60,33 @@ def newItem():
         while True:
             priceInput = float(input('Enter the price of the item: '))
             if priceInput <= 0:
-                print('Try Again!')
+                print('Price cannot be 0 or negative!')
             else:
                 break
 
         while True:
             discInput = float(input('Enter the discount in %: '))
             if discInput < 0:
-                print('Try again!')
+                print('Discount cannot be negative!')
             else:
                 break
 
         while True:
             qtyInput = int(input('Enter the current quantity of the item: '))
             if qtyInput < 0:
-                print('Try Again')
+                print('Quantity cannot be negative!')
             else:
                 break
 
         while True:
             reQtyInput = int(input('Enter the reorder quantity: '))
             if reQtyInput < 0:
-                print('Try Again!')
+                print('Reorder QTY cannot be negative!')
             else:
                 break
         ins = [codeInput, descInput, priceInput,
                discInput, qtyInput, reQtyInput]
+        # Opened in append to simply add one row instead of overwriting the entire file
         with open('Items.csv', 'a') as fileObject:
             writer = csv.writer(fileObject)
             writer.writerow(ins)
