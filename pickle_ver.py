@@ -11,7 +11,6 @@ import sys
 import questionary as qr
 print(sys.executable)
 print(sys.version)
-sp.run('pip install --upgrade tabulate', shell=True)
 today = date.today()
 
 header_standard = ['ITEM_CODE', 'DESC',

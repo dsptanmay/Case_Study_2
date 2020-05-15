@@ -1,12 +1,12 @@
 # CSV VERSION OF SALES EMULATION PROJECT
+import csv
 import questionary as qr
 import sys
 from datetime import date
 from tabulate import tabulate
-import csv
-import subprocess as sp
-print(sys.version)
+import pickle
 print(sys.executable)
+print(sys.version)
 today = date.today()
 header_standard = ['ITEM_CODE', 'DESC',
                    'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
