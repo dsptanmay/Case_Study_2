@@ -5,3 +5,5 @@ test.*
 *.csv
 *.json
 __pycache__
+*.docx
+*.pdf
