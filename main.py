@@ -13,8 +13,10 @@ print(sys.version)
 sp.run('pip install --upgrade tabulate', shell=True)
 today = date.today()
 
-header_standard = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
-header_purchase = ['ITEM_CODE', 'DESC', 'PRICE', 'DISCOUNT', 'ACTUAL PRICE', 'QTY', 'TOTAL_PRICE']
+header_standard = ['ITEM_CODE', 'DESC',
+                   'PRICE', 'DISCOUNT', 'QTY', 'REORDER_QTY']
+header_purchase = ['ITEM_CODE', 'DESC', 'PRICE',
+                   'DISCOUNT', 'ACTUAL PRICE', 'QTY', 'TOTAL_PRICE']
 
 
 def createFiles():
@@ -115,7 +117,7 @@ def modifyItem():
             return
         else:
             print('Current data set:\n')
-            print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
+            print(tabulate(data, header_standard, 'fancy_grid'), '\n')
 
         while True:
             modCode = str(
@@ -197,7 +199,7 @@ def removeItem():
     while cont in 'yY':
         print('-'*45)
         print('Current records:\n')
-        print(tabulate(data, header_standard, tablefmt='fancy_grid'), '\n')
+        print(tabulate(data, header_standard, 'fancy_grid'), '\n')
         while True:
             remCode = str(
                 input('Enter the code for which you want to delete the record: '))
@@ -258,7 +260,7 @@ def purchaseItem():
     cont = 'y'
     while cont in 'yY':
         print(f"Current data:\n")
-        print(tabulate(data, header_standard, tablefmt='fancy_grid'))
+        print(tabulate(data, header_standard, 'fancy_grid'), '\n')
         while True:
             purchaseCode = str(
                 input("Enter the item code that you want to purchase: "))
@@ -286,10 +288,10 @@ def purchaseItem():
         contentList.append(newList)
         print(today)
         print('\n')
-        print(tabulate(contentList, headers=header_purchase, tablefmt='fancy_grid'), '\n')
+        print(tabulate(contentList, header_purchase, 'fancy_grid'), '\n')
         print("- Thank you for shopping with us! ")
         print("- No returns,no refunds ")
-        print("- If cashier doesn't provide the bill, then this purchase is on the house ")
+        print("- If cashier doesn't provide the bill, then this purchase is on the house\n")
         cont = str(input('\nDo you wish to continue?(y/n): ')
                    ).lower().rstrip(" ").lstrip(" ")
 

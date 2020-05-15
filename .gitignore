@@ -1,11 +1,6 @@
-Project Details.txt
-Items.dat
-Sales.dat
-sql_test.py
-test2.py
-pandas_file.py
-purchase.py
-.vscode/launch.json
-Sales.csv
-Items.csv
+*.txt
 test.*
+*.mp3
+*.dat
+*.csv
+*.json
