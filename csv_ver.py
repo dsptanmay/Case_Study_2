@@ -155,50 +155,46 @@ def modifyItem():
             newPrice = str(input('Enter the NEW Price(Enter for skip): '))
             if newPrice == '':
                 break
+            elif float(newPrice) < 0:
+                print('Price cannot be negative')
             else:
                 newPrice = float(newPrice)
-                if newPrice < 0:
-                    print('Price cannot be negative')
-                else:
-                    newData[2] = newPrice
-                    break
+                newData[2] = newPrice
+                break
         while True:
             newDisc = str(input('Enter the new discount(Enter for skip): '))
             if newDisc == '':
                 break
+            elif float(newDisc) < 0:
+                print('Discount cannot be negative!')
             else:
                 newDisc = float(newDisc)
-                if newDisc < 0:
-                    print('Discount cannot be negative!')
-                else:
-                    newData[3] = newDisc
-                    break
+                newData[3] = newDisc
+                break
 
         while True:
             newQty = str(
                 input('Enter the NEW current Quantity(Enter for skip): '))
             if newQty == '':
                 break
+            elif int(newQty) < 0:
+                print('Quantity cannot be negative!')
             else:
                 newQty = int(newQty)
-                if newQty < 0:
-                    print('Quantity cannot be negative!')
-                else:
-                    newData[4] = newQty
-                    break
+                newData[4] = newQty
+                break
 
         while True:
             newReQty = str(
                 input('Enter the NEW reorder quantity(Enter for skip): '))
             if newReQty == "":
                 break
+            elif int(newReQty) < 0:
+                print('Reorder Quantity cannot be negative!')
             else:
                 newReQty = int(newReQty)
-                if newReQty < 0:
-                    print('Reorder Quantity cannot be negative!')
-                else:
-                    newData[5] = newReQty
-                    break
+                newData[5] = newReQty
+                break
 
         data.insert(modIndex, newData)
         print('Record succesfully modified!')

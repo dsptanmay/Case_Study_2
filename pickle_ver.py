@@ -159,6 +159,7 @@ def modifyItem():
             else:
                 newPrice = float(newPrice)
                 newData[2] = newPrice
+                break
 
         while True:
             newDisc = str(input('Enter the NEW Discount(Enter for skip): '))
@@ -169,6 +170,7 @@ def modifyItem():
             else:
                 newDisc = float(newDisc)
                 newData[3] = newDisc
+                break
         while True:
             newQty = str(input('Enter the NEW Quantity(Enter for skip): '))
             if newQty == '':
@@ -178,6 +180,7 @@ def modifyItem():
             else:
                 newQty = int(newQty)
                 newData[4] = newQty
+                break
         while True:
             newReQty = str(
                 input('Enter the NEW Reorder Quantity(Enter for skip): '))
@@ -188,6 +191,7 @@ def modifyItem():
             else:
                 newReQty = float(newReQty)
                 newData[5] = newReQty
+                break
 
         data.insert(modIndex, newData)
         with open('Items.dat', 'wb') as fileObject:
