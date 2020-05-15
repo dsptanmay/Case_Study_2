@@ -337,3 +337,6 @@ def main():
         elif response == options[5]:
             exit()
 
+
+if __name__ == "__main__":
+    main()
