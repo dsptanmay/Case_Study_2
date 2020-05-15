@@ -4,3 +4,4 @@ test.*
 *.dat
 *.csv
 *.json
+__pycache__
