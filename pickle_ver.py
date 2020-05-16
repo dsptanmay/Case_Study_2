@@ -39,8 +39,8 @@ def createFiles():
 
 
 def newItem():
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         print('-'*45)
         codes = {}  # Dict to hold item code and index of same
         data = []
@@ -59,7 +59,7 @@ def newItem():
                 except:
                     break
         while True:
-            code = str(input('Enter the item code:'))  # 1
+            code = str(input('Enter the item code: '))  # 1
             if code in codes.keys():
                 print('Code already taken!')
                 print('Try Again!')
@@ -100,12 +100,12 @@ def newItem():
         with open('Items.dat', 'wb') as fileObject:
             pickle.dump(data, fileObject)
         print('Entry successfully made!')
-        cont = str(input("Do you wish to continue?(y/n): "))
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def modifyItem():
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         print("-"*45)
         data = []
         codes = {}
@@ -198,38 +198,37 @@ def modifyItem():
             pickle.dump(data, fileObject)
         print('Entry modified succesfully!')
 
-        cont = str(
-            input('Do you wish to continue?(y/n): '
-                  )).lower().rstrip(" ").lstrip(" ")
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def removeItem():
+    cont = True
+    while cont:
+        data = []
+        codes = {}
+        with open('Items.dat', 'rb') as fileObject:
+            while True:
+                try:
+                    data = pickle.load(fileObject)
+                    if len(data) == 0:
+                        pass
+                    else:
+                        for row in data:
+                            index = data.index(row)
+                            ncode = row[0]
+                            c = {ncode: index}
+                            codes.update(c)
+                except:
+                    break
+        if len(data) == 0:
+            print('Data Set is currently empty')
+            print('Add some data first!')
+            return
+        else:
+            print('-'*45)
+            print('Current records:\n')
+            print(tabulate(data, header_standard, 'fancy_grid'), '\n')
 
-    data = []
-    codes = {}
-    with open('Items.dat', 'rb') as fileObject:
-        while True:
-            try:
-                data = pickle.load(fileObject)
-                if len(data) == 0:
-                    pass
-                else:
-                    for row in data:
-                        index = data.index(row)
-                        ncode = row[0]
-                        c = {ncode: index}
-                        codes.update(c)
-            except:
-                break
-    if len(data) == 0:
-        print('Data Set is currently empty')
-        print('Add some data first!')
-        return
-    cont = 'y'
-    while cont in 'yY':
-        print('-'*45)
-        print('Current records:\n')
-        print(tabulate(data, header_standard, 'fancy_grid'), '\n')
         while True:
             remCode = str(
                 input('Enter the code for which you want to delete the record: '))
@@ -244,9 +243,7 @@ def removeItem():
             pickle.dump(newData, fileObject)
         print('Modified records:')
         print(tabulate(newData, header_standard, 'fancy_grid'), '\n')
-        cont = str(
-            input('Do you wish to continue?(y/n): '
-                  )).lower().rstrip(" ").lstrip(" ")
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def showAll():
@@ -287,8 +284,8 @@ def purchaseItem():
         print('Add some data first!')
         return
 
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         print(f"Current data:\n")
         print(tabulate(data, header_standard, 'fancy_grid'), '\n')
         while True:
@@ -300,9 +297,10 @@ def purchaseItem():
                 index = codes[purchaseCode]
                 rec = data[index]
                 break
-        discount = rec[3]
+        discount = float(rec[3])
         acDisc = (discount/100)  # Converting discount from float to percent
-        actualPrice = (rec[2] - (rec[2]*acDisc))  # Price - Price*Discount
+        # Price - Price*Discount
+        actualPrice = (float(rec[2]) - (float(rec[2])*acDisc))
         while True:
             qty = int(input('Enter the quantity(INT): '))
             if qty < 0:
@@ -322,8 +320,7 @@ def purchaseItem():
         print("- Thank you for shopping with us! ")
         print("- No returns,no refunds ")
         print("- If cashier doesn't provide the bill, then this purchase is on the house\n")
-        cont = str(input('\nDo you wish to continue?(y/n): ')
-                   ).lower().rstrip(" ").lstrip(" ")
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def main():
