@@ -1,2 +1,0 @@
-tabulate==0.8.7
-questionary==1.5.2
