@@ -102,7 +102,7 @@ def newItem():
         with open('Items.csv', 'a') as fileObject:
             writer = csv.writer(fileObject)
             writer.writerow(ins)
-            print('Entry succesfully inserted!')
+            print('Entry successfully inserted!')
         print('-'*45)
         cont = qr.confirm('Do you wish to continue?').ask()
 
@@ -197,7 +197,7 @@ def modifyItem():
                 break
 
         data.insert(modIndex, newData)
-        print('Record succesfully modified!')
+        print('Record successfully modified!')
         with open('Items.csv', 'w') as fileObject:
             writer = csv.writer(fileObject)
             for row in data:
@@ -240,7 +240,7 @@ def removeItem():
                 data.pop(remIndex)
                 newData = data
                 break
-        print('Entry succesfully deleted!\n')
+        print('Entry successfully deleted!\n')
         print(tabulate(newData, header_standard, 'fancy_grid', '\n'))
         with open('Items.csv', 'w') as fileObject:
             writer = csv.writer(fileObject)
@@ -327,7 +327,7 @@ def main():
     createFiles()
     options = ['1.Add a new item',
                '2.Modify an existing item',
-               '3.Remove an exisiting item',
+               '3.Remove an existing item',
                '4.Show all items',
                '5.Purchase an item and generate a bill',
                '6.EXIT']
