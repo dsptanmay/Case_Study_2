@@ -34,8 +34,8 @@ def createFiles():
 
 
 def newItem():
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         print('-'*45)
         data = []
         codes = {}
@@ -104,12 +104,12 @@ def newItem():
             writer.writerow(ins)
             print('Entry succesfully inserted!')
         print('-'*45)
-        cont = str(input('Do you wish to continue?(y/n): '))
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def modifyItem():
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         data = []
         codes = {}
         with open('Items.csv', 'r') as fileObject:
@@ -202,13 +202,12 @@ def modifyItem():
             writer = csv.writer(fileObject)
             for row in data:
                 writer.writerow(row)
-        cont = str(input('Do you wish to continue?(y/n): ')
-                   ).lower().rstrip(' ').lstrip(' ')
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def removeItem():
-    cont = 'y'
-    while cont in 'yY':
+    cont = True
+    while cont:
         data = []
         codes = {}
         with open('Items.csv', 'r') as fileObject:
@@ -248,7 +247,7 @@ def removeItem():
             for row in newData:
                 writer.writerow(row)
 
-        cont = str(input('Do you wish to continue?(y/n): '))
+        cont = qr.confirm('Do you wish to continue?')
 
 
 def showAllItems():
@@ -267,26 +266,26 @@ def showAllItems():
 
 
 def purchaseItem():
-    data = []
-    codes = {}
-    with open('Items.csv', 'r') as fileObject:
-        reader = csv.reader(fileObject)
-        for line in reader:
-            if len(line) != 0:
-                data.append(line)
-            if len(data) != 0:
-                for row in data:
-                    index = data.index(row)
-                    ncode = row[0]
-                    c = {ncode: index}
-                    codes.update(c)
+    cont = True
+    while cont:
+        data = []
+        codes = {}
+        with open('Items.csv', 'r') as fileObject:
+            reader = csv.reader(fileObject)
+            for line in reader:
+                if len(line) != 0:
+                    data.append(line)
+                if len(data) != 0:
+                    for row in data:
+                        index = data.index(row)
+                        ncode = row[0]
+                        c = {ncode: index}
+                        codes.update(c)
 
-    if len(data) == 0:
-        print('Data Set is currently empty')
-        print('Add some data first!')
-        return
-    cont = 'y'
-    while cont in 'yY':
+        if len(data) == 0:
+            print('Data Set is currently empty')
+            print('Add some data first!')
+            return
         print('Current data:\n')
         print(tabulate(data, header_purchase, 'fancy_grid'), '\n')
         while True:
@@ -321,7 +320,7 @@ def purchaseItem():
                  -NO RETURNS, NO REFUNDS!
                  -IF Bill is not provided, then this purchase is on the house!
                  """)
-        cont = str(input('Do you wish to continue?(y/n): '))
+        cont = qr.confirm('Do you wish to continue?').ask()
 
 
 def main():
