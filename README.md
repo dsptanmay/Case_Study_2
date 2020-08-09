@@ -19,4 +19,4 @@ It has two versions:
 ## Usage
 * Simply run either pickle_ver.py or csv_ver.py
 * Enter data as required
-* See the magic happen!
+* See the magic happen! 
